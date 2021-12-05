@@ -98,6 +98,8 @@ if GetDepend(['BSP_USING_USBH']):
 
 src += ['drv_common.c']
 
+src += ['drv_mpu6050.c']
+
 path =  [cwd]
 path += [cwd + '/config']
 

@@ -32,7 +32,7 @@ void mpu6050_thread_entry(void *parameter)
         {
             rt_kprintf("mpu6050: temperature=%-6d gx=%-6d gy=%-6d gz=%-6d ax=%-6d ay=%-6d az=%-6d\r\n",temp/100,gx,gy,gz,ax,ay,az);
         }
-        rt_thread_delay(rt_tick_from_millisecond(10));    
+        rt_thread_delay(rt_tick_from_millisecond(5));    
     }
 }
  
