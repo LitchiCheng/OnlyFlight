@@ -7,9 +7,8 @@
 int main(void)
 { 
     initAHRSThread();
-
     while (1){
-        //led
+				rt_thread_mdelay(10);
     }
     return RT_EOK;
 }
