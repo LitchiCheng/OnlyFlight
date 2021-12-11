@@ -50,20 +50,20 @@ while num<100:
         bgraghic=plt.subplot(6, 1, 4)
         bgraghic.set_title('ax')
         bgraghic.plot(ax,'g-')
-        #图表2
-        ay.append(float(x[4]))
-        bgraghic=plt.subplot(6, 1, 5)
-        bgraghic.set_title('ay')
-        bgraghic.plot(ay,'g-')
-        #图表2
-        az.append(float(x[5]))
-        bgraghic=plt.subplot(6, 1, 6)
-        bgraghic.set_title('az')
-        bgraghic.plot(az,'g-')
+        # #图表2
+        # ay.append(float(x[4]))
+        # bgraghic=plt.subplot(6, 1, 5)
+        # bgraghic.set_title('ay')
+        # bgraghic.plot(ay,'g-')
+        # #图表2
+        # az.append(float(x[5]))
+        # bgraghic=plt.subplot(6, 1, 6)
+        # bgraghic.set_title('az')
+        # bgraghic.plot(az,'g-')
     except ValueError:
         pass
     
-    plt.pause(0.03)     #设置暂停时间，太快图表无法正常显示
+    plt.pause(0.01)     #设置暂停时间，太快图表无法正常显示
 
 plt.ioff()       # 关闭画图的窗口，即关闭交互模式
 plt.show()       # 显示图片，防止闪退
