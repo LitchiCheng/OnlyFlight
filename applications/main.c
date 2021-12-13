@@ -7,10 +7,10 @@
  
 int main(void)
 { 
-    //initAHRSThread();
-		initPPMThread();
+    initAHRSThread();
+	initPPMThread();
     while (1){
-				rt_thread_mdelay(10);
+		rt_thread_mdelay(10);
     }
     return RT_EOK;
 }

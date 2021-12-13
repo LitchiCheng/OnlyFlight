@@ -89,6 +89,39 @@ menu "On-chip Peripheral Drivers"
                 default 25
         endif
     source "libraries/HAL_Drivers/Kconfig"
+
+    menuconfig BSP_USING_PWM1
+        bool "Enable PWM1"
+        default n
+        if BSP_USING_PWM1
+            comment "BSP_USING_PWM1"
+            config BSP_USING_PWM1_CH1
+                bool "Enable PWM1_CH1"
+                default y
+            config BSP_USING_PWM1_CH4
+                bool "Enable PWM1_CH4"
+                default y
+            config BSP_USING_TIM1
+                bool "Enable TIMER1"
+                default y
+        endif
+    menuconfig BSP_USING_PWM4
+        bool "Enable PWM4"
+        default n
+        if BSP_USING_PWM4
+            comment "BSP_USING_PWM4"
+            config BSP_USING_PWM4_CH1
+                bool "Enable PWM4_CH1"
+                default y
+            config BSP_USING_PWM4_CH42
+                bool "Enable PWM4_CH2"
+                default y
+            config BSP_USING_TIM4
+                bool "Enable TIMER4"
+                default y
+        endif
+
+    source "libraries/HAL_Drivers/Kconfig"
     
 endmenu
 
