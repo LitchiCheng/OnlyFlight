@@ -3,10 +3,12 @@
 #include "math.h"
 
 #include "AHRS.h"
+#include "PPM.h"
  
 int main(void)
 { 
-    initAHRSThread();
+    //initAHRSThread();
+		initPPMThread();
     while (1){
 				rt_thread_mdelay(10);
     }
