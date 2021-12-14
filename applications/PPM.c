@@ -2,6 +2,8 @@
 #include "stm32f1xx_hal.h"
 #include "drv_common.h"
 
+extern rt_mq_t remote_mq_t;
+
 TIM_HandleTypeDef htim2;
 
 #define MAX_PPM_CHANNELS (8)
@@ -49,24 +51,17 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
 // Adjust these values if the cursor in the computer jumps at the end points of sticks
 // typically it should be 1000 and 2000
-#define PPM_MIN (950)
-#define PPM_MAX (2000)
+#define PPM_MIN (1400)
+#define PPM_MAX (2950)
 #define HID_MAX_VALUE (255)
 
 #define PPM_SCALE(X) ((X - PPM_MIN) * HID_MAX_VALUE / (PPM_MAX - PPM_MIN))
 
-#define CHAN_X (3)
-#define CHAN_Y (2)
+#define CHAN_1 (3)
+#define CHAN_2 (2)
 
-#define CHAN_RX (0)
-#define CHAN_Z (1)
-
- struct gamepadHID_t {
-     uint8_t x;
-     uint8_t y;
-     uint8_t z;
-     uint8_t rx;
- };
+#define CHAN_3 (0)
+#define CHAN_4 (1)
 
  /* USER CODE END 0 */
 
@@ -128,21 +123,24 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
  }
 
- void ppm_thread_entry(void *parameter)
- {
-     MX_TIM2_Init();
-     struct gamepadHID_t report = { 0 };
-     HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_2);
-     while (1)
-     {
-         report.x = PPM_SCALE(ppm_channel_timing[CHAN_X]);
-         report.y = PPM_SCALE(ppm_channel_timing[CHAN_Y]);
-         report.z = PPM_SCALE(ppm_channel_timing[CHAN_Z]);
-         report.rx = PPM_SCALE(ppm_channel_timing[CHAN_RX]);
-         rt_kprintf("x %d y %d z %d\r\n", ppm_channel_timing[CHAN_X],ppm_channel_timing[CHAN_Y],ppm_channel_timing[CHAN_Z]);
- 				 rt_thread_mdelay(10);
-     }
- }
+void ppm_thread_entry(void *parameter)
+{
+    MX_TIM2_Init();
+    struct remote_t report = { 0 };
+    HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_2);
+    while (1)
+    {
+        report.channel1 = PPM_SCALE(ppm_channel_timing[CHAN_1]);
+        report.channel2 = PPM_SCALE(ppm_channel_timing[CHAN_2]);
+        report.channel3 = PPM_SCALE(ppm_channel_timing[CHAN_3]);
+        report.channel4 = PPM_SCALE(ppm_channel_timing[CHAN_4]);
+        //rt_kprintf("x %d y %d z %d rx %d\r\n", ppm_channel_timing[CHAN_1],ppm_channel_timing[CHAN_2],ppm_channel_timing[CHAN_3], ppm_channel_timing[CHAN_4]);
+        if(remote_mq_t != NULL){
+            rt_mq_send(remote_mq_t, &report, sizeof(report));
+        }
+        rt_thread_mdelay(50);
+    }
+}
 
  void initPPMThread()
  {
@@ -151,7 +149,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
      tid = rt_thread_create("ppm", 
                              ppm_thread_entry,
                              RT_NULL,
-                             1024,
+                             2048,
                              23,
                              20);
      if (tid == RT_NULL){

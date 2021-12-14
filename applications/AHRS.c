@@ -216,11 +216,11 @@ void mpu6050_thread_entry(void *parameter)
         double acc_roll = RAD2DEG(atan2((ay / 16384.0),(az / 16384.0)));
 //        double kalman_pitch = kalman_filter(acc_pitch, -gyro_pitch, gyro_pitch_filter, gyro_pitch_dot_filter, time_elapse);
 //        double kalman_roll = kalman_filter(acc_roll, -gyro_roll, gyro_roll_filter, gyro_roll_dot_filter, time_elapse);
-				static double c_pitch_filter = 0;
-				static double c_roll_filter = 0;
-				c_pitch_filter = complementaryFilter1d(acc_pitch, c_pitch_filter, 0.80);
-				c_roll_filter = complementaryFilter1d(acc_roll, c_roll_filter, 0.80);
-        rt_kprintf("%f|%f|%f|%f|%f|%f\r\n",-gyro_pitch, acc_pitch, c_pitch_filter,-gyro_roll, acc_roll, c_roll_filter);
+		static double c_pitch_filter = 0;
+		static double c_roll_filter = 0;
+		c_pitch_filter = complementaryFilter1d(acc_pitch, c_pitch_filter, 0.80);
+		c_roll_filter = complementaryFilter1d(acc_roll, c_roll_filter, 0.80);
+        //rt_kprintf("%f|%f|%f|%f|%f|%f\r\n",-gyro_pitch, acc_pitch, c_pitch_filter,-gyro_roll, acc_roll, c_roll_filter);
         rt_thread_delay(rt_tick_from_millisecond(5));    
     }
 }
