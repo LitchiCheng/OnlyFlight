@@ -20,7 +20,7 @@ void pwm_entry(void *pra)
 		if (rt_mq_recv(remote_mq_t, &channel_v, sizeof(struct remote_t), RT_WAITING_FOREVER) == RT_EOK){
 			for (size_t i = 0; i < sizeof(aerofoil_obj) / sizeof(aerofoil_obj[0]); i++){
 				//uint8_t channel_v = *((uint8_t*)(&remote_v + i*sizeof(uint8_t)));
-				rt_kprintf("%d           %d\r\n", i, channel_v[i]);
+				//rt_kprintf("%d           %d\r\n", i, channel_v[i]);
 				rt_pwm_set(aerofoil_obj[i].dev, aerofoil_obj[i].channel, PWM_PERIOD, (channel_v[i] / 255.0) * PWM_PERIOD);
 			}
 		}
