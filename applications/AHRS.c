@@ -163,7 +163,7 @@ void mpu6050_thread_entry(void *parameter)
 		}else{
 			time_elapse = (double)(rt_tick_get()-last_tick) / RT_TICK_PER_SECOND;
 			gyro_pitch += (-gy / 16.4) * time_elapse;
-			gyro_roll += (-gx / 16.4) * time_elapse;
+			gyro_roll += (gx / 16.4) * time_elapse;
 		}
 		last_tick = rt_tick_get();
 		
