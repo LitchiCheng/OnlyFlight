@@ -16,6 +16,9 @@ rt_int16_t ax_off,ay_off,az_off;
 rt_int16_t gx_max,gy_max,gz_max;
 rt_int16_t ax_max,ay_max,az_max;
 
+AHRS_t ahrs;
+rt_mq_t ahrs_mq_t = RT_NULL;
+
 void calibOffset(rt_int16_t* gx_off, rt_int16_t* gy_off, rt_int16_t* gz_off,
                     rt_int16_t* ax_off, rt_int16_t* ay_off, rt_int16_t* az_off){
     rt_int64_t gx_sum = 0;
@@ -168,16 +171,20 @@ void mpu6050_thread_entry(void *parameter)
 		last_tick = rt_tick_get();
 		
 		Kalman_Fileter_SetAngle(kf_angle, acc_roll, acc_pitch, -(gx / 16.4), -(gy / 16.4), time_elapse);
-		rt_kprintf("%f|%f|%f|%f|%f|%f|%f\r\n",gyro_pitch, acc_pitch, kf_angle->kalAngleY, gyro_roll, acc_roll, kf_angle->kalAngleX, time_elapse*1000.0);
+		//rt_kprintf("%f|%f|%f|%f|%f|%f|%f\r\n",gyro_pitch, acc_pitch, kf_angle->kalAngleY, gyro_roll, acc_roll, kf_angle->kalAngleX, time_elapse*1000.0);
  		//rt_kprintf("%f|%f|%f|%f|%f|%f|%f\r\n",gyro_pitch, acc_pitch, kf_angle->compAngleY ,gyro_roll, acc_roll, kf_angle->compAngleX, time_elapse*1000.0);
-        
+        ahrs.pitch = kf_angle->kalAngleY;
+        ahrs.roll = kf_angle->kalAngleX;
+        if(ahrs_mq_t != NULL){
+            rt_mq_send(ahrs_mq_t, &ahrs, sizeof(ahrs));
+        }
         rt_thread_delay(rt_tick_from_millisecond(1));    
     }
 }
 
 void initAHRSThread(){
     rt_thread_t tid;
-    
+    ahrs_mq_t = rt_mq_create("ahrs_mq", sizeof(AHRS_t),1*sizeof(AHRS_t), RT_IPC_FLAG_FIFO);
     tid = rt_thread_create("mpu6050", 
                             mpu6050_thread_entry,
                             RT_NULL,

@@ -5,15 +5,22 @@
 #include <board.h>
 #include <rtdevice.h>
 
+#define PWM_PERIOD 500000  //周期的单位ns,0.5ms
+
 int initPwmThread(void);
 
-struct AeroFoil
+typedef struct
 {
     char* name;
     struct rt_device_pwm *dev;
     uint8_t channel;
     uint32_t throttle;
-};
+}AeroFoil;
+
+typedef struct 
+{
+    uint32_t thr[4];
+}Throttle_t;
 
 #define AEROFOIL_1  \
 {                   \

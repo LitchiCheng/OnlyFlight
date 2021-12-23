@@ -6,11 +6,18 @@
 
 void initPPMThread();
 
-struct remote_t {
+typedef struct {
 	uint8_t channel1;
 	uint8_t channel2;
 	uint8_t channel3;
 	uint8_t channel4;
+}remote_t;
+
+enum{
+	FRONT_RIGHT,
+	FRONT_LEFT,
+	REAR_LEFT,
+	REAR_RIGHT
 };
 
 #endif 

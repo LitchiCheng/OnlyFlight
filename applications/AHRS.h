@@ -7,4 +7,11 @@
 
 void initAHRSThread();
 
+typedef struct 
+{
+    float pitch;
+    float roll;
+} AHRS_t;
+
+
 #endif //

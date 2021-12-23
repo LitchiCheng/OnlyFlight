@@ -126,7 +126,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 void ppm_thread_entry(void *parameter)
 {
     MX_TIM2_Init();
-    struct remote_t report = { 0 };
+    remote_t report = { 0 };
     HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_2);
     while (1)
     {
