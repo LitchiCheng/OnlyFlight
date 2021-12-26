@@ -19,7 +19,7 @@ typedef struct
 
 typedef struct 
 {
-    uint32_t thr[4];
+    int32_t thr[4];
 }Throttle_t;
 
 #define AEROFOIL_1  \

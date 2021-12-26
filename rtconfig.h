@@ -218,7 +218,7 @@
 /* BSP_USING_PWM4 */
 
 #define BSP_USING_PWM4_CH1
-#define BSP_USING_PWM4_CH42
+#define BSP_USING_PWM4_CH2
 #define BSP_USING_TIM4
 
 /* Board extended module Drivers */

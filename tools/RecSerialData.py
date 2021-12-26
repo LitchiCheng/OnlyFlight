@@ -1,6 +1,6 @@
 import serial,re
 
-sr = serial.Serial("COM10",115200)
+sr = serial.Serial("COM10",921600)
 r = re.compile("[]|[|]|[\s]")
 
 import matplotlib.pyplot as plt
@@ -63,7 +63,7 @@ while num<100:
     except ValueError:
         pass
     
-    plt.pause(0.01)     #设置暂停时间，太快图表无法正常显示
+    plt.pause(0.005)     #设置暂停时间，太快图表无法正常显示
 
 plt.ioff()       # 关闭画图的窗口，即关闭交互模式
 plt.show()       # 显示图片，防止闪退

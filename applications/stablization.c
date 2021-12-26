@@ -9,10 +9,10 @@ rt_mq_t af_mq_t = RT_NULL;
 void statble_thread_entry(void *parameter)
 {
     pid_t pid_set[4];
-    pid_set[FRONT_RIGHT] = *(getPid(1000,0,0,PWM_PERIOD,0));
-    pid_set[FRONT_LEFT] = *(getPid(1000,0,0,PWM_PERIOD,0));
-    pid_set[REAR_RIGHT] = *(getPid(1000,0,0,PWM_PERIOD,0));
-    pid_set[REAR_LEFT] = *(getPid(1000,0,0,PWM_PERIOD,0));
+    pid_set[FRONT_RIGHT] = *(getPid(1000,0,0,PWM_PERIOD,20000));
+    pid_set[FRONT_LEFT] = *(getPid(1000,0,0,PWM_PERIOD,20000));
+    pid_set[REAR_RIGHT] = *(getPid(1000,0,0,PWM_PERIOD,20000));
+    pid_set[REAR_LEFT] = *(getPid(1000,0,0,PWM_PERIOD,20000));
     Throttle_t tt;
     AHRS_t pAhrs;
     while(1)

@@ -14,10 +14,10 @@ typedef struct {
 }remote_t;
 
 enum{
-	FRONT_RIGHT,
-	FRONT_LEFT,
-	REAR_LEFT,
-	REAR_RIGHT
+	REAR_LEFT = 0,
+	REAR_RIGHT = 1,
+	FRONT_RIGHT = 2,
+	FRONT_LEFT = 3
 };
 
 #endif 
